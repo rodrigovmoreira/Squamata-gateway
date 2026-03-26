@@ -1,9 +1,11 @@
 import { PaymentStrategy } from './PaymentStrategy.js';
 
 export class StripeStrategy extends PaymentStrategy {
-  async process(amount, orderId) {
+  async process(amount, orderId, credentials) {
     try {
-      console.log(`💳 Calango-food: Gerando PaymentIntent Stripe para Pedido ${orderId}`);
+      console.log(`\x1b[36m%s\x1b[0m`, `💳 Gerando Intent Stripe para Pedido ${orderId}`);
+      
+      // Quando tiver a conta: const stripe = new Stripe(credentials.secretKey);
       
       return {
         success: true,

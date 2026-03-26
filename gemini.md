@@ -16,6 +16,32 @@ O **Calango Gateway** é um microsserviço de abstração de pagamentos multi-te
 
 - **Adapter Pattern:** Traduz webhooks heterogêneos para o formato padrão "Calango Standard".
 
+## 🧪 Protocolo de Testes Automatizados
+
+### 1. Ambiente Sandbox
+- Todas as estratégias de pagamento devem suportar um modo `test: true` dentro do objeto `credentials`.
+- Testes automatizados nunca devem interagir com APIs de Produção (Live Keys).
+
+### 2. Validação de Contrato
+- O teste deve garantir que, independente do provedor, o objeto de retorno contenha as chaves: `success`, `transactionId`, `gateway` e `status`.
+
+### 3. Isolamento de Provedores
+- **Pasta `tests/mocks/`**: Deve conter as respostas de sucesso e erro simuladas de cada gateway.
+- **Uso de Mocks**: Durante os testes de integração, as chamadas de rede para Stripe/PagBank devem ser interceptadas e substituídas pelos arquivos da pasta mocks.
+
+### 4. Cobertura de Testes
+- **Cenário de Sucesso**: Validar se a transação é criada no MongoDB local com status `pending`.
+- **Cenário de Erro**: Validar se o Gateway lida corretamente com credenciais inválidas enviadas pelo tenant.
+
+## 🛠️ Automação de Scripts (package.json)
+
+### 1. Ambiente de Testes (Jest + ESM)
+- **Comando Base:** Devido ao uso de ESM, os testes devem ser iniciados com a flag `--experimental-vm-modules`.
+- **Modo Watch:** Utilizar `npm run test:watch` para desenvolvimento ágil, garantindo que apenas os arquivos modificados sejam retestados, otimizando o uso de CPU no hardware local.
+
+### 2. Monitoramento de Desenvolvimento
+- O script `dev` utiliza a flag nativa `--watch` do Node.js 20+ para reiniciar o Gateway automaticamente em caso de mudanças no código-fonte.
+
 ## 🤖 Instruções para Agentes de IA (Prompting)
 
 ### 1. Contexto de Atuação
