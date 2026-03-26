@@ -1,33 +1,19 @@
-import express from 'express';
-import cors from 'cors';
+
+import app from './src/app.js';
+import connectDB from './src/config/db.js';
 import dotenv from 'dotenv';
-import paymentRoutes from './src/routes/paymentRoutes.js';
-// import './src/config/db.js'; // Descomente após criar o arquivo de conexão
 
 // Carrega variáveis de ambiente do arquivo .env
 dotenv.config();
 
-// Inicializa o servidor Express
-const app = express();
+// Define a porta do servidor
 const PORT = process.env.PORT || 3010;
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
-
-// Determina a rota inicial do Gateway
-app.use('/v1/payments', paymentRoutes);
-
-// Rota de Health Check (Para saber se o PC velho está vivo)
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'online', 
-    timestamp: new Date().toISOString(),
-    service: 'calango-gateway'
+// Inicializa o banco de dados antes de subir o servidor
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`\x1b[36m%s\x1b[0m`, `🐊 Calango Gateway [ON]`);
+    console.log(`🚀 Porta: ${PORT}`);
+    console.log(`📍 URL: http://localhost:${PORT}`);
   });
-});
-
-// Inicia o servidor
-app.listen(PORT, () => {
-  console.log(`🐊 Calango Gateway rodando na porta ${PORT}`);
 });

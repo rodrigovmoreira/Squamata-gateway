@@ -1,6 +1,6 @@
-import { PixStrategy } from './PixStrategy.js';
-import { PagBankStrategy } from './PagBankStrategy.js';
-import { StripeStrategy } from './StripeStrategy.js';
+import { PixStrategy } from '../providers/PixStrategy.js';
+import { PagBankStrategy } from '../providers/PagBankStrategy.js';
+import { StripeStrategy } from '../providers/StripeStrategy.js';
 
 export class PaymentFactory {
 

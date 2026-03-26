@@ -56,6 +56,15 @@ O gateway não armazena chaves de API. O projeto solicitante (Calango Food) deve
 - `POST /v1/payments/create`: Inicia uma transação.
 - `POST /v1/payments/webhook/:provider`: Recebe confirmações de pagamento.
 
+## 🏗️ Organização do Bootstrap (Inicialização)
+
+### 1. Separação App vs Server
+- **`src/app.js`**: Contém a definição da instância Express, middlewares e declaração de rotas. Não inicia o `listen`.
+- **`server.js`**: Ponto de entrada que orquestra a conexão com o MongoDB e, após o sucesso, inicia o servidor na porta definida no `.env`.
+
+### 2. Fluxo de Inicialização Crítica
+O sistema está configurado para **Fail-Fast**: Se a conexão com o banco de dados local falhar, o processo Node.js é encerrado com `process.exit(1)`, impedindo que a API aceite pagamentos que não poderão ser registrados.
+
 ## ⚠️ Regras de Ouro para Evolução (Patterns)
 
 ### 1. Contrato de Interface (PaymentStrategy)
