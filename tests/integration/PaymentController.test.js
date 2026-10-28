@@ -70,9 +70,9 @@ describe('PaymentController Integration Tests', () => {
   });
 
   describe('Validações Gerais', () => {
-    test('POST /v1/payments/create - Deve retornar 400 se faltarem campos obrigatórios', async () => {
+    test('POST /api/v1/payments/create - Deve retornar 400 se faltarem campos obrigatórios', async () => {
       const response = await request(app)
-        .post('/v1/payments/create')
+        .post('/api/v1/payments/create')
         .send({ amount: 100 }); // Payload incompleto
 
       expect(response.status).toBe(400);
@@ -83,7 +83,7 @@ describe('PaymentController Integration Tests', () => {
   describe('Provider: PIX', () => {
     let createdTransactionId;
 
-    test('POST /v1/payments/create - Cria transação PIX', async () => {
+    test('POST /api/v1/payments/create - Cria transação PIX', async () => {
       const payload = {
         tenantId: 'rest_01',
         amount: 150.50,
@@ -92,7 +92,7 @@ describe('PaymentController Integration Tests', () => {
         credentials: { test: true }
       };
 
-      const response = await request(app).post('/v1/payments/create').send(payload);
+      const response = await request(app).post('/api/v1/payments/create').send(payload);
 
       expect(response.status).toBe(201);
       expect(response.body.gateway).toBe('pix');
@@ -103,7 +103,7 @@ describe('PaymentController Integration Tests', () => {
       createdTransactionId = transactionInDb.transactionId;
     });
 
-    test('POST /v1/payments/webhook/pix - Processa webhook PIX com sucesso', async () => {
+    test('POST /api/webhooks/payments/pix - Processa webhook PIX com sucesso', async () => {
       // Mock inicial
       savedTransactions.push({
         transactionId: 'PIX-TEST-123',
@@ -118,7 +118,7 @@ describe('PaymentController Integration Tests', () => {
         valor: 150.50
       };
 
-      const response = await request(app).post('/v1/payments/webhook/pix').send(webhookPayload);
+      const response = await request(app).post('/api/webhooks/payments/pix').send(webhookPayload);
       
       expect(response.status).toBe(200);
 
@@ -132,7 +132,7 @@ describe('PaymentController Integration Tests', () => {
   describe('Provider: Stripe', () => {
     let createdTransactionId;
 
-    test('POST /v1/payments/create - Cria transação Stripe', async () => {
+    test('POST /api/v1/payments/create - Cria transação Stripe', async () => {
       const payload = {
         tenantId: 'rest_02',
         amount: 50.00,
@@ -141,14 +141,14 @@ describe('PaymentController Integration Tests', () => {
         credentials: { test: true }
       };
 
-      const response = await request(app).post('/v1/payments/create').send(payload);
+      const response = await request(app).post('/api/v1/payments/create').send(payload);
 
       expect(response.status).toBe(201);
       expect(response.body.gateway).toBe('stripe');
       expect(response.body.transactionId).toMatch(/^STP-/);
     });
 
-    test('POST /v1/payments/webhook/stripe - Processa webhook Stripe com sucesso', async () => {
+    test('POST /api/webhooks/payments/stripe - Processa webhook Stripe com sucesso', async () => {
       savedTransactions.push({
         transactionId: 'STP-999',
         status: 'pending',
@@ -162,7 +162,7 @@ describe('PaymentController Integration Tests', () => {
         data: { object: { amount: 5000 } } // 50.00 reais em centavos
       };
 
-      const response = await request(app).post('/v1/payments/webhook/stripe').send(webhookPayload);
+      const response = await request(app).post('/api/webhooks/payments/stripe').send(webhookPayload);
       
       expect(response.status).toBe(200);
 
@@ -174,7 +174,7 @@ describe('PaymentController Integration Tests', () => {
   describe('Provider: PagBank', () => {
     let createdTransactionId;
 
-    test('POST /v1/payments/create - Cria transação PagBank via método "card"', async () => {
+    test('POST /api/v1/payments/create - Cria transação PagBank via método "card"', async () => {
       const payload = {
         tenantId: 'rest_03',
         amount: 80.00,
@@ -183,14 +183,14 @@ describe('PaymentController Integration Tests', () => {
         credentials: { test: true }
       };
 
-      const response = await request(app).post('/v1/payments/create').send(payload);
+      const response = await request(app).post('/api/v1/payments/create').send(payload);
 
       expect(response.status).toBe(201);
       expect(response.body.gateway).toBe('pagbank');
       expect(response.body.transactionId).toMatch(/^PGB-/);
     });
 
-    test('POST /v1/payments/webhook/pagbank - Processa webhook PagBank com sucesso', async () => {
+    test('POST /api/webhooks/payments/pagbank - Processa webhook PagBank com sucesso', async () => {
       savedTransactions.push({
         transactionId: 'PGB-777',
         status: 'pending',
@@ -208,7 +208,7 @@ describe('PaymentController Integration Tests', () => {
         ]
       };
 
-      const response = await request(app).post('/v1/payments/webhook/pagbank').send(webhookPayload);
+      const response = await request(app).post('/api/webhooks/payments/pagbank').send(webhookPayload);
       
       expect(response.status).toBe(200);
 

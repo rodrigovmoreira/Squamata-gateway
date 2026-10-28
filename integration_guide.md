@@ -5,13 +5,15 @@ A partir do ponto de vista do **desenvolvedor do Calango Food**, aqui está o pa
 ### 1. Dados que o Desenvolvedor do Calango Food Precisa
 Ele precisará conhecer:
 - **A URL base do Gateway:** Que será `http://localhost:3010` (no seu ambiente local/homelab).
-- **A Rota de Criação de Pagamentos:** `POST /v1/payments/create`
+- **A Rota de Criação de Pagamentos:** `POST /api/v1/payments/create`
+
+> O caminho legado `POST /v1/payments/create` **não existe mais**: a API é versionada em `/api/v1/payments/create` (ver [ADR 002](../Calango-docs/docs/ADRs/002-versionamento-de-api.md)). Use sempre o caminho versionado.
 
 ### 2. Enviando a Requisição (Exemplo Node.js/Axios no Calango Food)
 Para simular um pagamento PIX de 0,01 centavo, o dev do Calango Food deve executar o seguinte no fluxo de checkout (após o pedido ser fechado):
 
 ```javascript
-const response = await axios.post('http://localhost:3010/v1/payments/create', {
+const response = await axios.post('http://localhost:3010/api/v1/payments/create', {
   tenantId: "REST_123",            // ID do seu restaurante
   orderId: "PEDIDO_999",           // O ID gerado na sua base do Food
   amount: 0.01,                    // O valor em reais

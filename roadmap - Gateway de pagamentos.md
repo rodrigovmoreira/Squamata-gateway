@@ -7,7 +7,7 @@ Antes de programar, precisamos das chaves para o nosso Gateway conseguir "conver
 
 []. Obter Chaves Sandbox: No painel da Appmax, localize as credenciais de API para o ambiente de testes (Sandbox). Guarde a API Key e o Token.
 
-[]. Configurar URL de Webhook na Appmax: Você precisará dizer à Appmax para onde enviar os avisos de pagamento aprovado. Essa URL será a rota do seu Squamata-gateway (ex: [https://gateway.calangoapp.com/v1/payments/webhook/appmax](https://gateway.calangoapp.com/v1/payments/webhook/appmax)).   
+[]. Configurar URL de Webhook na Appmax: Você precisará dizer à Appmax para onde enviar os avisos de pagamento aprovado. Essa URL será a rota do seu Squamata-gateway (ex: [https://gateway.calangoapp.com/api/webhooks/payments/appmax](https://gateway.calangoapp.com/api/webhooks/payments/appmax)).
 MD
 
 ## Fase 2: Desenvolvimento no Squamata-Gateway (A Ponte)

@@ -3,10 +3,7 @@ import PaymentController from '../controllers/PaymentController.js';
 
 const router = Router();
 
-// Rota principal para criar pagamentos
+// Criação de pagamento — parte da API versionada (/api/v1/payments).
 router.post('/create', PaymentController.create);
-
-// Rota para receber Webhooks (Stripe, PagBank, etc)
-router.post('/webhook/:provider', PaymentController.handleWebhook);
 
 export default router;

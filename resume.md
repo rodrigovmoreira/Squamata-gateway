@@ -28,7 +28,7 @@ PaymentStrategy.js: A interface/contrato. Define que toda forma de pagamento dev
 Estratégias (Stripe-, PagBank-, PixStrategy.js): Arquivos que contêm a implementação técnica específica de cada instituição financeira. Eles se comunicam com as APIs externas e retornam um formato padronizado para o sistema.
 
 ### 🛣️ src/routes/
-paymentRoutes.js: Mapeia os endpoints da API (como /v1/payments/create) e os direciona para as funções correspondentes no Controller.
+paymentRoutes.js: Mapeia os endpoints da API (como /api/v1/payments/create) e os direciona para as funções correspondentes no Controller.
 
 ### 🛠️ src/services/
 PaymentFactory.js: Implementa o Factory Pattern. É o responsável por ler o method da requisição e decidir qual classe da pasta providers deve ser instanciada.

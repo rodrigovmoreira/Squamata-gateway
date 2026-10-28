@@ -79,8 +79,10 @@ O gateway não armazena chaves de API. O projeto solicitante (Calango Food) deve
 5. Squamata Gateway -> Calango Food (Notificação de Sucesso).
 
 ## 📡 Endpoints v1
-- `POST /v1/payments/create`: Inicia uma transação.
-- `POST /v1/payments/webhook/:provider`: Recebe confirmações de pagamento.
+- `POST /api/v1/payments/create`: Inicia uma transação.
+- `POST /api/webhooks/payments/:provider`: Recebe confirmações de pagamento (fora do versionamento).
+
+> O prefixo `/v1/payments/...` **não existe mais**: o caminho é único e versionado (ver [ADR 002](../Calango-docs/docs/ADRs/002-versionamento-de-api.md)). Webhooks ficam em `/api/webhooks/payments/:provider`, fora do versionamento.
 
 ## 🏗️ Organização do Bootstrap (Inicialização)
 
